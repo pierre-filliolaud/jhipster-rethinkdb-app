@@ -2,6 +2,8 @@ package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.domain.Product;
 import com.mycompany.myapp.repository.ProductRepository;
+import com.mycompany.myapp.repository.rethinkdb.ProductRethinkdbRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,9 @@ public class ProductService {
     
     @Inject
     private ProductRepository productRepository;
+    
+    @Inject
+    private ProductRethinkdbRepository productRethinkdbRepository;
 
     /**
      * Save a product.
@@ -31,6 +36,7 @@ public class ProductService {
     public Product save(Product product) {
         log.debug("Request to save Product : {}", product);
         Product result = productRepository.save(product);
+        productRethinkdbRepository.save(product);
         return result;
     }
 

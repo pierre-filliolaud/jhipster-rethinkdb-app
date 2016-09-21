@@ -2,6 +2,7 @@ package com.mycompany.myapp.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 import com.rethinkdb.RethinkDB;
 import com.rethinkdb.net.Connection;
@@ -16,9 +17,15 @@ public class RethinkDBConfig {
     @Bean
     public RethinkDB rethinkDB(){
         RethinkDB r = RethinkDB.r;
-        Connection conn = r.connection()
-            .hostname("localhost").port(28017).connect();
         return r;
+    }
+    
+    @Bean
+    @DependsOn("rethinkDB")
+    public Connection rethinkdbConnection(){
+        Connection conn = rethinkDB().connection()
+            .hostname("localhost").port(28017).connect();
+        return conn;
     }
 
 }
