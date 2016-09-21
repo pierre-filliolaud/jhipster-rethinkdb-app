@@ -1,0 +1,13 @@
+version: '2'
+services:
+    rethinkdb:
+        container_name: rethinkdb
+        image: rethinkdb:2.3.5
+        ports:
+            - "28017:28017"
+            - "29017:29017"
+            - "6080:8080"
+
+
+        # volumes:
+        #     - ~/volumes/jhipster/Profile/rethink/:/data/db/
