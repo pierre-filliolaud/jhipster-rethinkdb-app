@@ -1,0 +1,17 @@
+version: '2'
+services:
+    rethinkdbjhipster-mongodb:
+        container_name: rethinkdbjhipster-mongodb
+        image: mongo:3.3.12
+        ports:
+            - "27017:27017"
+        command: mongos --configdb rethinkdbjhipster-mongodb-config
+    rethinkdbjhipster-mongodb-node:
+        build:
+            context: .
+            dockerfile: mongodb/MongoDB.Dockerfile
+        command: mongod --replSet rs1 --noprealloc --smallfiles
+    rethinkdbjhipster-mongodb-config:
+        image: mongo:mongo:3.3.12
+        container_name: rethinkdbjhipster-mongodb-config
+        command: mongod --noprealloc --smallfiles --configsvr --dbpath /data/db

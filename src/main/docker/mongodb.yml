@@ -1,0 +1,9 @@
+version: '2'
+services:
+    rethinkdbjhipster-mongodb:
+        container_name: rethinkdbjhipster-mongodb
+        image: mongo:3.3.12
+        ports:
+            - "27017:27017"
+        # volumes:
+        #     - ~/volumes/jhipster/rethinkdbjhipster/mongodb/:/data/db/
