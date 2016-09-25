@@ -11,20 +11,22 @@ import com.rethinkdb.RethinkDB;
 
 public class RethinkdbRepository<S, ID extends Serializable> {
 	
+	public static final String DBNAME = "rethinkdbjhipster";
+	
 	private static final RethinkDB rethinkdb = RethinkDB.r;
 	
 	@Inject
 	private RethinkDBConnectionFactory connectionFactory;
 	
 	public void save(S entity) {
-		String entityClassName = ((Class<?>)((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]).getName();
-		rethinkdb.db("test").table(entityClassName).insert(entity).run(connectionFactory.createConnection());
+		String entityClassName = ((Class<?>)((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]).getSimpleName().toLowerCase();
+		rethinkdb.db(DBNAME).table(entityClassName).insert(entity).run(connectionFactory.createConnection());
 	}
 	
 	public List<S> getEntities() {
 		Class clazz = ((Class<?>)((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
-		String entityClassName = clazz.getName();
-        List<S> entities = (List<S>)rethinkdb.db("test").table(entityClassName)
+		String entityClassName = clazz.getSimpleName();
+        List<S> entities = (List<S>)rethinkdb.db(DBNAME).table(entityClassName)
                 .orderBy().optArg("index", rethinkdb.desc("id"))
                 .limit(20)
                 .orderBy("time")

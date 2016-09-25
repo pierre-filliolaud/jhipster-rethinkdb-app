@@ -4,8 +4,8 @@ services:
         container_name: rethinkdb
         image: rethinkdb:2.3.5
         ports:
-            - "28017:28017"
-            - "29017:29017"
+            - "28015:28015"
+            - "29015:29015"
             - "6080:8080"
 
 
